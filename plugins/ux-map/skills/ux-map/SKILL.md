@@ -1,6 +1,6 @@
 ---
 name: ux-map
-description: Build a verified UX map of a website's path from first visit to its goal — a purchase for commercial sites, or a completed task for free, public-information, government, nonprofit and data/dashboard sites (find a record, understand it, apply, donate, report) — with personas, journey stages, a plain-language journey infographic (PNG + animated HTML), flowcharts, a journey map, prioritized findings, metrics, and a list of what is still unverified, by actually walking the site in the browser, then delivering it as a shareable doc. Use this whenever the user asks for a UX map, user journey, customer journey, conversion funnel, signup/checkout flow review, "how do users get from landing to buying", a funnel audit, a usability walk-through of a public tool or dashboard, or wants to know where visitors drop off or get stuck on a website, even if they don't say "UX map".
+description: Build a verified UX map of a website's path from first visit to its goal — a purchase for commercial sites, or a completed task for free, public-information, government, nonprofit and data/dashboard sites (find a record, understand it, apply, donate, report) — with personas, journey stages, a step-by-step user guide infographic (PNG + animated HTML), flowcharts, a journey map, prioritized findings, metrics, and a list of what is still unverified, by actually walking the site in the browser, then delivering it as a shareable doc. Use this whenever the user asks for a UX map, user journey, customer journey, conversion funnel, signup/checkout flow review, "how do users get from landing to buying", a funnel audit, a usability walk-through of a public tool or dashboard, or wants to know where visitors drop off or get stuck on a website, even if they don't say "UX map".
 ---
 
 # UX map: first visit to goal
@@ -91,7 +91,7 @@ Use this section order. Keep each section's first sentence as its point.
 1. **Summary** — the one-sentence diagnosis, how the map was built (date, logged-out + logged-in, nothing created), what was not tested, and the top 3 fixes as a numbered list.
 2. **Personas** — table: persona · role · wants · blocked by. Always separate the *user* from the *payer/approver* when they differ (B2B, research, NGOs, schools, agencies); that split is where many funnels leak.
 3. **Funnel stages** — numbered list from aware → expand (usually 8–11), each with one concrete line about this site. Stages are about the user's progress, not the site's pages, so many entry paths don't mean more stages.
-4. **At a glance** — the journey infographic as an image (see "Infographic" below), with one sentence under it saying who it's for and that the animated version is attached. This sits above the flowcharts so a non-technical reader can stop here.
+4. **At a glance** — the user guide infographic as an image (see "Infographic" below), with one sentence saying it's written for the site's users and can be shared with them as is. It sits above the flowcharts; the team-facing story continues below it.
 5. **Flow 1: public site to checkout** — diagram (see below). Non-commercial: the desktop task flow.
 6. **Flow 2: dashboard to payment** — diagram, only if the logged-in walk happened; otherwise a pending note. Non-commercial without login: the phone task flow, when it differs from desktop (it usually does).
 7. **Journey map** — table: stage · what the user meets · mood · friction · fix · checked (Yes/No). The "checked" column is the verified/assumed tag.
@@ -99,21 +99,28 @@ Use this section order. Keep each section's first sentence as its point.
 9. **Metrics to track** — table: stage · one metric that shows the leak.
 10. **Not yet verified** — a task list of exactly what wasn't tested and why (would consume a free quota, would start a payment, needed login).
 
-### Infographic (for non-technical readers)
+### Infographic (a guide for the site's users)
 
-The flowcharts serve the team that fixes things; the infographic serves everyone else — managers, funders, clients, field staff — who need the story in one picture. Write it for someone who has never seen the site's code or jargon.
+The flowcharts and tables are for the team that fixes things. The infographic is for the people who *use* the site: a one-page "how to do it" guide they could be handed, pinned up, or shared in a group chat. It is written to them, in their words, and it never mentions the team's problems, findings or fixes.
+
+Turn the walk into the guide:
+
+- **Steps** = the path the walk proved works, in order, as actions: "Tap Scan voucher", "Pick your area". Keep to 5–8 steps; merge small ones.
+- **"You'll see"** = the exact on-screen words or button label at that step, copied from the walk, so users recognise where they are.
+- **Friction becomes help.** Every friction point in the journey map becomes a tip that gets the user past it today: a confusing number → "Higher numbers mean more harm; check the colour key"; free-text names that drift → "Use the same spelling every time". Mark steps where people often slip as `watch`, steps with a handy hint as `tip`.
+- **Don't promise what's broken.** If a step can't currently be done (e.g. no share button), leave it out rather than inventing a workaround.
+- **Good to know** = three short answers to the questions users will actually have (no signal, can't log in, where's my file), taken from the site's own copy, FAQ or help.
+- Plain words, short sentences, no internal codes or jargon unless they appear on screen, and then explain them.
+
+Build it:
 
 1. Copy `assets/infographic-template.html` to `ux-map-<site>-infographic.html` in the working directory (or next to the markdown output).
-2. Replace only the `JOURNEY` object at the top. Everything else renders from it, for any number of stops (aim for 5–7):
-   - `headline`: the finding, in two short lines — "Finding a record is easy. / Understanding it is hard." Not the topic.
-   - `lead` + `leadQuote`: one sentence on who was followed, and the visitor's key question where they get stuck.
-   - `stops`: one per journey stage, in plain words. `title` is what the visitor does ("Pick your area"), `text` is what happens, `thought` is what they'd say out loud ("Is 2.59 good or bad?"). `status` is `ok` / `warn` / `bad`; give `bad` stops a `tag` ("People get stuck here", "People leave here"). Pick an `icon` from the list in the template.
-   - `fixes`: the top three fixes from the findings table, each as a short imperative title plus one plain sentence.
-   - No codes, URLs, metrics jargon or internal names unless the visitor sees them on screen — and then explain them.
-3. The HTML has a Portrait / Landscape switch in the top-right corner (hidden in the PNG). Portrait is a vertical road with cards alternating left and right — best for phones, docs and 6+ stops. Landscape is a horizontal road with cards alternating above and below — best for slides, screens and 4–6 stops. Set `layout` in `JOURNEY` to choose the default.
-4. Render the PNGs: `python <skill-dir>/scripts/render_png.py ux-map-<site>-infographic.html` (portrait) and the same with `--landscape`. Output files end in `-portrait.png` / `-landscape.png`. It uses headless Edge or Chrome and freezes the walking character at stop 1. Look at both PNGs before using them; fix overflowing text by shortening it, not by editing the CSS. Embed the portrait one in the doc; mention the landscape one for slides.
-5. In the doc, embed the portrait PNG in the "At a glance" section (upload it through the docs connector; read its uploads guide first). Uploading needs an artifact upload tool (`upload_asset`); if the session doesn't have one, list the three files with their paths in that section and tell the user they can drag the PNG in. Mention the animated HTML file by name so people can open it in a browser. In a markdown fallback, link both files.
-6. If neither Edge nor Chrome is available, deliver the HTML only and say the PNG needs a screenshot.
+2. Replace only the `JOURNEY` object at the top; everything else renders from it, for any number of stops. Fields: `kicker` (site · who the guide is for), `headline` (the goal in two short lines, e.g. "Submit a voucher / in 7 simple steps"), `lead` (who it's for), `need` (what to have ready), `stops` (`kind` = `step` / `tip` / `watch` / `done`; `icon`; `title`; `text`; optional `screen` and `tip`), `goodToKnow` (three items). The last stop should be `done`.
+3. If the site serves several kinds of user (e.g. field staff and an office team), make one guide per user type, starting with the largest group; name the files `-<user>-infographic.html`.
+4. The HTML has a Portrait / Landscape switch in the top-right corner (hidden in the PNG). Portrait is a vertical road with cards alternating left and right — best for phones, docs and 6+ stops. Landscape is a horizontal road with cards alternating above and below — best for slides, screens and 4–7 stops. Set `layout` in `JOURNEY` to choose the default.
+5. Render the PNGs: `python <skill-dir>/scripts/render_png.py ux-map-<site>-infographic.html` (portrait) and the same with `--landscape`. Output files end in `-portrait.png` / `-landscape.png`. It uses headless Edge or Chrome and freezes the walking character at step 1. Look at both PNGs before using them; fix overflowing text by shortening it, not by editing the CSS.
+6. In the doc, embed the portrait PNG in the "At a glance" section (upload it through the docs connector; read its uploads guide first). Uploading needs an artifact upload tool (`upload_asset`); if the session doesn't have one, list the three files with their paths in that section and tell the user they can drag the PNG in. Say in one line that it's a guide for users, ready to share with them.
+7. If neither Edge nor Chrome is available, deliver the HTML only and say the PNG needs a screenshot.
 
 ### Diagrams
 

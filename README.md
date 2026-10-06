@@ -8,7 +8,7 @@ Every claim is tagged as seen in the browser, stated by the site, or not reached
 
 - Personas, splitting who uses the site from who pays or acts
 - Journey stages
-- A plain-language infographic for non-technical readers: an animated HTML page with a Portrait / Landscape switch, plus PNG images of both layouts (rendered with Edge or Chrome)
+- A step-by-step guide for the site's users (an infographic you can share with them): an animated HTML page with a Portrait / Landscape switch, plus PNG images of both layouts (rendered with Edge or Chrome)
 - Two flowcharts: public site and logged-in app, or desktop and phone
 - A journey map table with friction and fixes per stage
 - Findings and fixes, sorted by priority

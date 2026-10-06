@@ -2,33 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Visitor journey</title>
+<title>How to use this site</title>
 <script>
-/* Fill this object only. Everything below renders from it.
-   status: "ok" (works well) | "warn" (slows people down) | "bad" (people get stuck)
+/* A step-by-step guide for the people who USE the site, not for the team that builds it.
+   Fill this object only. Everything below renders from it.
+   kind:   "step" (a normal step) | "tip" (a step with a helpful hint) | "watch" (a step where people often slip) | "done" (the finish)
    icon:   "loading" | "pin" | "list" | "question" | "phone" | "share" | "cart" | "card" | "user" | "search" | "mail" | "check"
-   tag:    optional red label for "bad" stops, e.g. "People get stuck here" / "People leave here"
+   screen: optional — the exact words or button label the user will see at this step
+   tip:    optional — one friendly sentence that helps them through this step
    layout: "portrait" (default) or "landscape" — the page also has a toggle; ?layout=landscape overrides */
 const JOURNEY = {
   layout: "portrait",
-  kicker: "Example Site · visitor journey",
-  headline: ["Finding it is easy.", "Understanding it is hard."],
-  lead: "We followed one visitor from opening the site to taking action. They get stuck at the moment that matters most:",
-  leadQuote: "\"Is this good or bad?\"",
+  kicker: "Example Site · quick guide",
+  headline: ["Find a record", "in 4 easy steps"],
+  lead: "Everything you need to look up a record and understand what it means.",
+  need: "You need: a phone or computer with internet",
   stops: [
-    { status: "warn", icon: "loading",  title: "Open the website", text: "A loading circle spins for about 9 seconds.", thought: "\"Is it broken?\"" },
-    { status: "ok",   icon: "pin",      title: "Pick your area",   text: "The map zooms straight to it.", thought: "\"Good, there's my area.\"" },
-    { status: "bad",  icon: "question", title: "Check one item",   text: "The popup shows a bare number with no scale.", thought: "\"Is 2.59 good or bad?\"", tag: "People get stuck here" }
+    { kind: "step",  icon: "loading",  title: "Open the website", text: "Give it a few seconds to load the map.", screen: "A loading circle, then the map" },
+    { kind: "step",  icon: "pin",      title: "Pick your area",   text: "Choose your division, then your district.", screen: "Select Division", tip: "The map zooms in for you." },
+    { kind: "watch", icon: "question", title: "Read the result",  text: "Tap a record to see its details.", screen: "Harm Rate: 2.59", tip: "Higher numbers mean more harm; check the colour key on the map." },
+    { kind: "done",  icon: "check",    title: "You're done",      text: "Use Get directions to visit it, or share the page link." }
   ],
-  fixes: [
-    { title: "Say it in words", text: "Show the level in words next to every number." },
-    { title: "Keep phone users here", text: "Tapping an item should show it, not leave the site." },
-    { title: "Explain the codes", text: "Show the result count and what each code means." }
+  goodToKnow: [
+    { title: "Colours matter", text: "Dark red means most harmful, pale yellow least." },
+    { title: "On a phone?", text: "Use View Map to see the map full screen." },
+    { title: "Need help?", text: "Open the Explanatory note at the top of the page." }
   ]
 };
 </script>
 <style>
-  :root { --ink:#1f2933; --soft:#52606d; --bg:#fbf7f0; --card:#fff; --ok:#2f9e6e; --warn:#e8a33d; --bad:#d64545; --road:#d9cbb4; --chip:#f3efe7; }
+  :root { --ink:#1f2933; --soft:#52606d; --bg:#fbf7f0; --card:#fff; --ok:#2f9e6e; --warn:#e8a33d; --bad:#d64545; --step:#3d7ea6; --road:#d9cbb4; --chip:#f3efe7; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); font-family:"Segoe UI", system-ui, -apple-system, sans-serif; color:var(--ink); }
   .sheet { width:900px; margin:0 auto; padding:44px 40px 48px; background:var(--bg); }
@@ -39,20 +42,24 @@ const JOURNEY = {
   .lead b { color:var(--bad); }
   .legend { display:flex; justify-content:center; gap:22px; font-size:14px; color:var(--soft); margin:18px 0 28px; }
   .legend i { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
-  .ok { background:var(--ok); } .warn { background:var(--warn); } .bad { background:var(--bad); }
+  .ok { background:var(--ok); } .warn { background:var(--warn); } .bad { background:var(--bad); } .step { background:var(--step); }
   .journey { position:relative; padding-top:70px; }
   .road { position:absolute; left:400px; top:40px; bottom:0; width:20px; background:var(--road); border-radius:10px; }
   .road::after { content:""; position:absolute; left:8px; top:0; bottom:0; border-left:4px dashed #fff; }
   .stop { position:relative; height:160px; }
   .node { position:absolute; left:386px; top:24px; width:48px; height:48px; border-radius:50%; border:6px solid var(--bg); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:20px; z-index:2; }
   .card { position:absolute; top:0; width:360px; background:var(--card); border-radius:18px; padding:18px 20px; border-top:6px solid; box-shadow:0 2px 0 rgba(0,0,0,.06); z-index:1; }
-  .card.ok { border-color:var(--ok); } .card.warn { border-color:var(--warn); } .card.bad { border-color:var(--bad); }
+  .card.ok { border-color:var(--ok); } .card.warn { border-color:var(--warn); } .card.bad { border-color:var(--bad); } .card.step { border-color:var(--step); }
+  .say .lbl { display:block; font-style:normal; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--soft); margin-bottom:2px; }
+  .tipline { margin-top:10px; font-size:15px; line-height:1.4; padding:8px 12px; border-radius:10px; }
+  .tipline.warn { background:#fdf1dc; } .tipline.bad { background:#fbe3e3; } .tipline.ok { background:#e2f3ea; } .tipline.step { background:#e3eef5; }
+  .need { display:inline-block; margin-top:14px; font-size:15px; font-weight:600; background:#fff; border-radius:999px; padding:6px 16px; }
   .stop:nth-child(odd) .card { left:0; } .stop:nth-child(even) .card { left:460px; }
   .row { display:flex; gap:14px; align-items:flex-start; }
   .icon { flex:0 0 52px; height:52px; border-radius:14px; background:var(--chip); display:flex; align-items:center; justify-content:center; }
   .card h2 { font-size:21px; margin:2px 0 6px; }
   .card p { font-size:16px; margin:0; color:var(--soft); line-height:1.4; }
-  .say { margin-top:10px; font-size:15px; font-style:italic; background:var(--chip); border-radius:10px; padding:8px 12px; }
+  .say { margin-top:10px; font-size:15px; font-style:normal; font-weight:600; background:var(--chip); border-radius:10px; padding:8px 12px; }
   .tag { display:inline-block; margin-top:10px; font-size:13px; font-weight:700; padding:4px 10px; border-radius:20px; color:#fff; background:var(--bad); }
   .walker { position:absolute; left:375px; top:0; width:70px; z-index:5; animation-timing-function:ease-in-out; animation-iteration-count:infinite; }
   .walker svg { display:block; animation:bob .6s infinite alternate ease-in-out; }
@@ -60,7 +67,7 @@ const JOURNEY = {
   .fixes h3 { text-align:center; font-size:26px; margin:40px 0 18px; }
   .fixrow { display:flex; gap:18px; }
   .fix { flex:1; background:var(--ink); color:#fff; border-radius:18px; padding:18px; }
-  .fix .n { width:34px; height:34px; border-radius:50%; background:var(--ok); display:flex; align-items:center; justify-content:center; font-weight:700; margin-bottom:10px; }
+  .fix .n { width:34px; height:34px; border-radius:50%; background:var(--step); font-family:Georgia,serif; font-style:italic; display:flex; align-items:center; justify-content:center; font-weight:700; margin-bottom:10px; }
   .fix b { display:block; font-size:18px; margin-bottom:6px; }
   .fix span { font-size:15px; color:#cbd2d9; line-height:1.4; }
   .sheet { position:relative; }
@@ -96,7 +103,8 @@ const ICONS = {
   mail: c => `<rect x="3" y="7" width="24" height="17" rx="3" fill="${c}"/><path d="M4 9l11 8 11-8" fill="none" stroke="#fff" stroke-width="2"/>`,
   check: c => `<circle cx="15" cy="15" r="12" fill="${c}"/><path d="M9 15l4 4 8-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`
 };
-const COLOR = { ok:"#2f9e6e", warn:"#e8a33d", bad:"#d64545" };
+const COLOR = { ok:"#2f9e6e", warn:"#e8a33d", bad:"#d64545", step:"#3d7ea6" };
+const CLS = { step:"step", tip:"warn", watch:"bad", done:"ok" };
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const J = JOURNEY, n = J.stops.length, params = new URLSearchParams(location.search);
 const STILL = params.has("still");
@@ -106,16 +114,16 @@ const walker = `<div class="walker" aria-hidden="true"><svg width="70" height="6
 document.getElementById("sheet").innerHTML = `
   <div class="modes" role="group" aria-label="Layout"><button data-mode="portrait">Portrait</button><button data-mode="landscape">Landscape</button></div>
   <header><div class="kicker">${esc(J.kicker)}</div><h1>${J.headline.map(esc).join("<br>")}</h1>
-  <p class="lead">${esc(J.lead)} <b>${esc(J.leadQuote || "")}</b></p></header>
-  <div class="legend"><span><i class="ok"></i>Works well</span><span><i class="warn"></i>Slows people down</span><span><i class="bad"></i>People get stuck</span></div>
+  <p class="lead">${esc(J.lead)}</p>${J.need ? `<div class="need">${esc(J.need)}</div>` : ""}</header>
+  <div class="legend"><span><i class="step"></i>Step</span><span><i class="warn"></i>Handy tip</span><span><i class="bad"></i>Watch out</span><span><i class="ok"></i>Done</span></div>
   <div class="journey"><div class="road"></div>${walker}
-  ${J.stops.map((s, i) => `<div class="stop"><div class="stem ${s.status}"></div><div class="node ${s.status}">${i + 1}</div><div class="card ${s.status}">
-    <div class="row"><div class="icon"><svg width="30" height="30" viewBox="0 0 30 30">${(ICONS[s.icon] || ICONS.check)(COLOR[s.status])}</svg></div>
+  ${J.stops.map((s, i) => { const c = CLS[s.kind] || "step"; return `<div class="stop"><div class="stem ${c}"></div><div class="node ${c}">${s.kind === "done" ? "&#10003;" : i + 1}</div><div class="card ${c}">
+    <div class="row"><div class="icon"><svg width="30" height="30" viewBox="0 0 30 30">${(ICONS[s.icon] || ICONS.check)(COLOR[c])}</svg></div>
     <div><h2>${esc(s.title)}</h2><p>${esc(s.text)}</p></div></div>
-    ${s.thought ? `<div class="say">${esc(s.thought)}</div>` : ""}${s.tag ? `<span class="tag">${esc(s.tag)}</span>` : ""}</div></div>`).join("")}
+    ${s.screen ? `<div class="say"><span class="lbl">You'll see</span>${esc(s.screen)}</div>` : ""}${s.tip ? `<div class="tipline ${c}"><b>${s.kind === "watch" ? "Watch out:" : "Tip:"}</b> ${esc(s.tip)}</div>` : ""}</div></div>`; }).join("")}
   </div>
-  <div class="fixes"><h3>Fix these ${J.fixes.length === 3 ? "three" : J.fixes.length} first</h3><div class="fixrow">
-  ${J.fixes.map((f, i) => `<div class="fix"><div class="n">${i + 1}</div><b>${esc(f.title)}</b><span>${esc(f.text)}</span></div>`).join("")}</div></div>`;
+  <div class="fixes"><h3>Good to know</h3><div class="fixrow">
+  ${(J.goodToKnow || []).map(f => `<div class="fix"><div class="n">i</div><b>${esc(f.title)}</b><span>${esc(f.text)}</span></div>`).join("")}</div></div>`;
 
 const anim = document.createElement("style");
 document.head.appendChild(anim);
