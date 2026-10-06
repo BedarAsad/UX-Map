@@ -40,3 +40,7 @@ It also starts on its own when you ask things like "map the customer journey for
 - **A browser Claude can control:** the built-in browser in the Claude desktop app, or Claude in Chrome. Without one, the skill can't walk the site.
 - **Logged-in pages:** Claude never creates accounts, types passwords or pays. For logged-in pages you sign in yourself in the browser, and Claude walks read-only, checking a dashboard counter before and after to show nothing changed.
 - **Shareable doc:** needs a docs connector; otherwise you get markdown.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
