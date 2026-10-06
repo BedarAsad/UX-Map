@@ -1,0 +1,12 @@
+{
+  "name": "arced-skills",
+  "owner": { "name": "ARCED Foundation" },
+  "description": "Claude Code skills from ARCED Foundation.",
+  "plugins": [
+    {
+      "name": "ux-map",
+      "source": "./plugins/ux-map",
+      "description": "Walks a website in the browser and builds a verified UX map from first visit to purchase or task completion."
+    }
+  ]
+}
