@@ -21,11 +21,11 @@ The map is delivered as a shareable doc when a docs connector is available, othe
 In Claude Code:
 
 ```
-/plugin marketplace add OWNER/REPO
+/plugin marketplace add BedarAsad/UX-Map
 /plugin install ux-map@arced-skills
 ```
 
-Replace `OWNER/REPO` with this repository's GitHub path. Updates arrive automatically when the plugin version changes.
+Updates arrive automatically when the plugin version changes.
 
 ## Use
 
